@@ -82,14 +82,27 @@ class HTTPClient(object):
 
         port = urlParse.port
         host = urlParse.hostname
-        if port == None:
+        if port == None:    #handling when port == None, use the default http port 80
             port = 80
 
+        #handling args for GET
+        if not args:
+            args = {}
+        args = urllib.parse.urlencode(args)
+
         self.connect(host, port)
+
         if urlParse.path != "":
-            self.sendall(requestGET.format(urlParse.path, host))
+            if args != "":
+                self.sendall(requestGET.format(urlParse.path+"?"+args, host))
+            else:
+                self.sendall(requestGET.format(urlParse.path, host))
         else:
-            self.sendall(requestGET.format("/", host))
+            if args != "":
+                self.sendall(requestGET.format("/?"+args, host))
+            else:
+                self.sendall(requestGET.format("/", host))
+
         response = self.recvall(self.socket)
         self.close()
 
@@ -113,7 +126,7 @@ class HTTPClient(object):
         if not args:  #handling when args == None
             args = {}
         args = urllib.parse.urlencode(args)
-
+        
         self.connect(host, port)
         self.sendall(requestPOST.format(urlParse.path, host, len(args))+args)
         response = self.recvall(self.socket)
