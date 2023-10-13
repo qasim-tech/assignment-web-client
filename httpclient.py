@@ -86,13 +86,18 @@ class HTTPClient(object):
             port = 80
 
         self.connect(host, port)
-        self.sendall(requestGET.format(urlParse.path, host))
+        if urlParse.path != "":
+            self.sendall(requestGET.format(urlParse.path, host))
+        else:
+            self.sendall(requestGET.format("/", host))
         response = self.recvall(self.socket)
         self.close()
 
         code = self.get_code(response)
         headers = self.get_headers(response)
         body = self.get_body(response)
+
+        print(response)
         return HTTPResponse(code, body)
 
     def POST(self, url, args=None):
@@ -118,6 +123,7 @@ class HTTPClient(object):
         headers = self.get_headers(response)
         body = self.get_body(response)
 
+        print(response)
         return HTTPResponse(code, body)
 
     def command(self, url, command="GET", args=None):

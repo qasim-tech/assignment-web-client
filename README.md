@@ -18,3 +18,8 @@ examples thus some of the code is Copyright © 2001-2013 Python
 Software Foundation; All Rights Reserved under the PSF license (GPL
 compatible) http://docs.python.org/2/library/socketserver.html
 
+References
+========================
+https://www.geeksforgeeks.org/http-headers-connection/
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST#example
+https://stackoverflow.com/questions/7801991/how-to-convert-a-dictionary-to-query-string-in-python
